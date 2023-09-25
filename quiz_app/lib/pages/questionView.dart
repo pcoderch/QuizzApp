@@ -2,19 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quiz_app/data/fileManager.dart';
 import 'package:quiz_app/model/ProgressBar.dart';
 import 'package:quiz_app/model/Question.dart';
+import 'package:quiz_app/model/RankingStat.dart';
 import 'dart:math';
 
 import 'package:quiz_app/pages/resultsView.dart';
 
 class QuestionView extends StatefulWidget {
-  const QuestionView({Key? key, required this.username}) : super(key: key);
+  const QuestionView({Key? key, required this.username, required this.selectedAvatarId}) : super(key: key);
   final String username;
+  final int selectedAvatarId;
 
   @override
   // ignore: no_logic_in_create_state
-  _QuestionViewState createState() => _QuestionViewState(username: username);
+  _QuestionViewState createState() => _QuestionViewState(username: username, selectedAvatarId: selectedAvatarId);
 }
 
 class _QuestionViewState extends State<QuestionView> with SingleTickerProviderStateMixin{
@@ -27,10 +30,13 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
   List<int> hintAnswers = [];
   bool hintActivated = false;
   String username = '';
+  int selectedAvatarId = 0;
 
-  _QuestionViewState({required String username}) {
+  _QuestionViewState({required String username, required int selectedAvatarId}) {
     // ignore: prefer_initializing_formals
     this.username = username;
+    // ignore: prefer_initializing_formals
+    this.selectedAvatarId = selectedAvatarId;
   }
 
   late AnimationController _animationController;
@@ -387,6 +393,34 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
   }
   
   void finishQuiz() {
+
+    bool newHighScore = false;
+
+    FileManager.readRankingFile().then((rankingList) {
+      if (rankingList.isEmpty) {
+        rankingList.add(RankingStat(username: username, score: quizPoints, avatarId: selectedAvatarId));
+        rankingList.sort((a, b) => b.score.compareTo(a.score)); //sort the list
+        FileManager.writeRankingFile(rankingList); //write the list
+        return;
+      } else {
+        for (int i = 0; i < rankingList.length; i++) {
+          if (rankingList[i].getUsername() == username) {
+            if (rankingList[i].getScore() < quizPoints) {
+              newHighScore = true;
+              rankingList[i].setScore(quizPoints);
+              rankingList[i].setAvatarId(selectedAvatarId);
+            }
+            rankingList.sort((a, b) => b.score.compareTo(a.score)); //sort the list
+            FileManager.writeRankingFile(rankingList); //write the list
+            return;
+          }
+        }
+        rankingList.add(RankingStat(username: username, score: quizPoints, avatarId: selectedAvatarId));
+        rankingList.sort((a, b) => b.score.compareTo(a.score)); //sort the list
+        FileManager.writeRankingFile(rankingList); //write the list
+      }
+    });
+
     Navigator.push(context
       , MaterialPageRoute(
         builder: (context) => ResultsView(
@@ -394,7 +428,8 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
           points: quizPoints,
           correctAnswers: countCorrectAnswers,
           totalAnswers: questions.length,
-          avatarUrl: 'avatar_1',
+          avatarUrl: 'avatar_${selectedAvatarId+1}',
+          newHighScore: newHighScore
         ),
       ),
     );  

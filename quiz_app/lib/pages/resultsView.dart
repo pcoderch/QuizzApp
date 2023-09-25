@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quiz_app/pages/leaderboard.dart';
 
 class ResultsView extends StatelessWidget {
   final String username;
@@ -9,6 +10,7 @@ class ResultsView extends StatelessWidget {
   final int correctAnswers;
   final int totalAnswers;
   final String avatarUrl;
+  final bool newHighScore;
 
   const ResultsView({
     Key? key,
@@ -17,6 +19,7 @@ class ResultsView extends StatelessWidget {
     required this.correctAnswers,
     required this.totalAnswers,
     required this.avatarUrl,
+    required this.newHighScore,
   }) : super(key: key);
 
   @override
@@ -33,6 +36,20 @@ class ResultsView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Visibility (
+                  visible: newHighScore,
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: const Text(
+                      'New High Score!',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 255, 230, 0),
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   width: 200,
                   height: 200,
@@ -88,7 +105,13 @@ class ResultsView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 100),
                   child: ElevatedButton(
                       onPressed: () {
-                        //TODO: Navigate to LEADERBOARD
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Leaderboard(
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white, backgroundColor: Colors.black, // Text color
@@ -96,7 +119,7 @@ class ResultsView extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                       ),
                       child: const Text(
-                        'Next',
+                        'Check Leaderboard',
                         style: TextStyle(fontSize: 18),
                       ),
                   ),
