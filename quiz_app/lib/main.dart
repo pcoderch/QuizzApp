@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: _title,  
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const WelcomeScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

@@ -6,12 +6,15 @@ import 'package:quiz_app/model/ProgressBar.dart';
 import 'package:quiz_app/model/Question.dart';
 import 'dart:math';
 
+import 'package:quiz_app/pages/resultsView.dart';
+
 class QuestionView extends StatefulWidget {
-  const QuestionView({Key? key}) : super(key: key);
+  const QuestionView({Key? key, required this.username}) : super(key: key);
+  final String username;
 
   @override
-  _QuestionViewState createState() => _QuestionViewState();
-
+  // ignore: no_logic_in_create_state
+  _QuestionViewState createState() => _QuestionViewState(username: username);
 }
 
 class _QuestionViewState extends State<QuestionView> with SingleTickerProviderStateMixin{
@@ -23,6 +26,12 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
   int countCorrectAnswers = 0;
   List<int> hintAnswers = [];
   bool hintActivated = false;
+  String username = '';
+
+  _QuestionViewState({required String username}) {
+    // ignore: prefer_initializing_formals
+    this.username = username;
+  }
 
   late AnimationController _animationController;
   // ignore: unused_field
@@ -360,6 +369,7 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
       } else {
         print('Quiz Complete');
         print('Total quiz points: $quizPoints');
+        finishQuiz();
       }
     });
   }
@@ -374,6 +384,20 @@ class _QuestionViewState extends State<QuestionView> with SingleTickerProviderSt
         }
       }
     });
+  }
+  
+  void finishQuiz() {
+    Navigator.push(context
+      , MaterialPageRoute(
+        builder: (context) => ResultsView(
+          username: username,
+          points: quizPoints,
+          correctAnswers: countCorrectAnswers,
+          totalAnswers: questions.length,
+          avatarUrl: 'avatar_1',
+        ),
+      ),
+    );  
   }
 
 
