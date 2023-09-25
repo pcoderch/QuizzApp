@@ -80,5 +80,54 @@ class Question {
       "imageUrl": "https://cdn.countryflags.com/thumbs/canada/flag-square-250.png",
       "options": ['Toronto', 'Vancouver', 'Ottawa', 'Montreal'],
       "answer_index": 2
+    },
+    {
+      "id": 6,
+      "Question": "What is the capital of China?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/china/flag-square-250.png",
+      "options": ['Shanghai', 'Beijing', 'Hong Kong', 'Shenzhen'],
+      "answer_index": 1
+    },
+    {
+      "id": 7,
+      "Question": "What is the capital of Japan?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/japan/flag-square-250.png",
+      "options": ['Tokyo', 'Osaka', 'Kyoto', 'Yokohama'],
+      "answer_index": 0
+    },
+    {
+      "id": 8,
+      "Question": "What is the capital of Brazil?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/brazil/flag-square-250.png",
+      "options": ['Rio de Janeiro', 'Sao Paulo', 'Brasilia', 'Salvador'],
+      "answer_index": 2
+    },
+    {
+      "id": 9,
+      "Question": "What is the capital of Russia?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/russia/flag-square-250.png",
+      "options": ['Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg'],
+      "answer_index": 0
+    },
+    {
+      "id": 10,
+      "Question": "What is the capital of France?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/france/flag-square-250.png",
+      "options": ['Paris', 'Marseille', 'Lyon', 'Toulouse'],
+      "answer_index": 0
+    },
+    {
+      "id": 11,
+      "Question": "What is the capital of Germany?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/germany/flag-square-250.png",
+      "options": ['Berlin', 'Hamburg', 'Munich', 'Cologne'],
+      "answer_index": 0
+    },
+    {
+      "id": 12,
+      "Question": "What is the capital of Italy?",
+      "imageUrl": "https://cdn.countryflags.com/thumbs/italy/flag-square-250.png",
+      "options": ['Rome', 'Milan', 'Naples', 'Turin'],
+      "answer_index": 0
     }
   ];
